@@ -1,5 +1,9 @@
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
+import org.mockito.MockedStatic;
+import org.mockito.Mockito;
+import org.mockito.Spy;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -88,9 +92,75 @@ public class HippodromeTest {
         Assertions.assertIterableEquals(horses, res);
     }
 
-//    @ParameterizedTest
-//    @ValueSource(doubles = {0.2, 0.5, 0.9})
-//    public void move_callGetRandomDouble_returnGetRandomDouble(double value) {
+    @Mock
+    List<Horse> mockedHorses = List.of(
+            Mockito.mock(Horse.class),
+            Mockito.mock(Horse.class),
+            Mockito.mock(Horse.class),
+            Mockito.mock(Horse.class),
+            Mockito.mock(Horse.class),
+            Mockito.mock(Horse.class),
+            Mockito.mock(Horse.class),
+            Mockito.mock(Horse.class),
+            Mockito.mock(Horse.class),
+            Mockito.mock(Horse.class),
+            Mockito.mock(Horse.class),
+            Mockito.mock(Horse.class),
+            Mockito.mock(Horse.class),
+            Mockito.mock(Horse.class),
+            Mockito.mock(Horse.class),
+            Mockito.mock(Horse.class),
+            Mockito.mock(Horse.class),
+            Mockito.mock(Horse.class),
+            Mockito.mock(Horse.class),
+            Mockito.mock(Horse.class),
+            Mockito.mock(Horse.class),
+            Mockito.mock(Horse.class),
+            Mockito.mock(Horse.class),
+            Mockito.mock(Horse.class),
+            Mockito.mock(Horse.class),
+            Mockito.mock(Horse.class),
+            Mockito.mock(Horse.class),
+            Mockito.mock(Horse.class),
+            Mockito.mock(Horse.class),
+            Mockito.mock(Horse.class),
+            Mockito.mock(Horse.class),
+            Mockito.mock(Horse.class),
+            Mockito.mock(Horse.class),
+            Mockito.mock(Horse.class),
+            Mockito.mock(Horse.class),
+            Mockito.mock(Horse.class),
+            Mockito.mock(Horse.class),
+            Mockito.mock(Horse.class),
+            Mockito.mock(Horse.class),
+            Mockito.mock(Horse.class),
+            Mockito.mock(Horse.class),
+            Mockito.mock(Horse.class),
+            Mockito.mock(Horse.class),
+            Mockito.mock(Horse.class),
+            Mockito.mock(Horse.class),
+            Mockito.mock(Horse.class),
+            Mockito.mock(Horse.class),
+            Mockito.mock(Horse.class),
+            Mockito.mock(Horse.class),
+            Mockito.mock(Horse.class)
+    );
+
+    @Test
+    public void move_mockedHorsesList_verifyCallingEveryHorseMove() {
+        Hippodrome hippodrome = new Hippodrome(mockedHorses);
+        hippodrome.move();
+        mockedHorses.forEach(h -> Mockito.verify(h).move());
+
+
+//        try (MockedStatic<Hippodrome> hippodromeMockedStatic = Mockito.mockStatic(Hippodrome.class)) {
+//            Hippodrome hippodrome = new Hippodrome(mockedHorses);
+//            hippodrome.move();
+//            hippodromeMockedStatic.verify(() -> mockedHorses.forEach(Horse::move));
+//        }
+
+
+
 //        try (MockedStatic<Horse> horseMock = Mockito.mockStatic(Horse.class)) {
 //            horseMock.when(() -> Horse.getRandomDouble(0.2, 0.9)).thenReturn(value);
 //            Horse horse = new Horse("Alfa", 370, 285);
@@ -98,5 +168,5 @@ public class HippodromeTest {
 //            Assertions.assertEquals(285 + 370 * value, horse.getDistance());
 //            horseMock.verify(() -> Horse.getRandomDouble(0.2, 0.9));
 //        }
-//    }
+    }
 }
