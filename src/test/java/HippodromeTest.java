@@ -1,14 +1,55 @@
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
-import org.mockito.MockedStatic;
 import org.mockito.Mockito;
 import org.mockito.Spy;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public class HippodromeTest {
+    private static Horse winner;
+    private List<Horse> horses;
+
+    @BeforeEach
+    public void init() {
+        winner = new Horse("One", 20, 30000);
+        horses = List.of(
+                winner,
+                new Horse("Two", 20, 30),
+                new Horse("Three", 20, 30),
+                new Horse("Four", 20, 30),
+                new Horse("Five", 20, 30),
+                new Horse("Six", 20, 30),
+                new Horse("Seven", 20, 30),
+                new Horse("Eight", 20, 30),
+                new Horse("Nine", 20, 30),
+                new Horse("Ten", 20, 30),
+                new Horse("Eleven", 20, 30),
+                new Horse("Twelve", 20, 30),
+                new Horse("Thirteen", 20, 30),
+                new Horse("Fourteen", 20, 30),
+                new Horse("Fifteen", 20, 30),
+                new Horse("Sixteen", 20, 30),
+                new Horse("Seventeen", 20, 30),
+                new Horse("Eighteen", 20, 30),
+                new Horse("Nineteen", 20, 30),
+                new Horse("Twenty", 20, 30),
+                new Horse("TwentyOne", 20, 30),
+                new Horse("TwentyTwo", 20, 30),
+                new Horse("TwentyThree", 20, 30),
+                new Horse("TwentyFour", 20, 30),
+                new Horse("TwentyFive", 20, 30),
+                new Horse("TwentySix", 20, 30),
+                new Horse("TwentySeven", 20, 30),
+                new Horse("TwentyEight", 20, 30),
+                new Horse("TwentyNine", 20, 30),
+                new Horse("Thirty", 20, 30)
+        );
+    }
+
     @Test
     public void constructor_nullValue_throwsException() {
         Throwable exception = Assertions.assertThrows(
@@ -55,118 +96,27 @@ public class HippodromeTest {
 
     @Test
     public void getHorses_validHorsesList_returnsSameHorsesList() {
-        List<Horse> horses = List.of(
-                new Horse("One", 20, 30),
-                new Horse("Two", 20, 30),
-                new Horse("Three", 20, 30),
-                new Horse("Four", 20, 30),
-                new Horse("Five", 20, 30),
-                new Horse("Six", 20, 30),
-                new Horse("Seven", 20, 30),
-                new Horse("Eight", 20, 30),
-                new Horse("Nine", 20, 30),
-                new Horse("Ten", 20, 30),
-                new Horse("Eleven", 20, 30),
-                new Horse("Twelve", 20, 30),
-                new Horse("Thirteen", 20, 30),
-                new Horse("Fourteen", 20, 30),
-                new Horse("Fifteen", 20, 30),
-                new Horse("Sixteen", 20, 30),
-                new Horse("Seventeen", 20, 30),
-                new Horse("Eighteen", 20, 30),
-                new Horse("Nineteen", 20, 30),
-                new Horse("Twenty", 20, 30),
-                new Horse("TwentyOne", 20, 30),
-                new Horse("TwentyTwo", 20, 30),
-                new Horse("TwentyThree", 20, 30),
-                new Horse("TwentyFour", 20, 30),
-                new Horse("TwentyFive", 20, 30),
-                new Horse("TwentySix", 20, 30),
-                new Horse("TwentySeven", 20, 30),
-                new Horse("TwentyEight", 20, 30),
-                new Horse("TwentyNine", 20, 30),
-                new Horse("Thirty", 20, 30)
-        );
         Hippodrome hippodrome = new Hippodrome(horses);
         List<Horse> res = hippodrome.getHorses();
         Assertions.assertIterableEquals(horses, res);
     }
 
-    @Mock
-    List<Horse> mockedHorses = List.of(
-            Mockito.mock(Horse.class),
-            Mockito.mock(Horse.class),
-            Mockito.mock(Horse.class),
-            Mockito.mock(Horse.class),
-            Mockito.mock(Horse.class),
-            Mockito.mock(Horse.class),
-            Mockito.mock(Horse.class),
-            Mockito.mock(Horse.class),
-            Mockito.mock(Horse.class),
-            Mockito.mock(Horse.class),
-            Mockito.mock(Horse.class),
-            Mockito.mock(Horse.class),
-            Mockito.mock(Horse.class),
-            Mockito.mock(Horse.class),
-            Mockito.mock(Horse.class),
-            Mockito.mock(Horse.class),
-            Mockito.mock(Horse.class),
-            Mockito.mock(Horse.class),
-            Mockito.mock(Horse.class),
-            Mockito.mock(Horse.class),
-            Mockito.mock(Horse.class),
-            Mockito.mock(Horse.class),
-            Mockito.mock(Horse.class),
-            Mockito.mock(Horse.class),
-            Mockito.mock(Horse.class),
-            Mockito.mock(Horse.class),
-            Mockito.mock(Horse.class),
-            Mockito.mock(Horse.class),
-            Mockito.mock(Horse.class),
-            Mockito.mock(Horse.class),
-            Mockito.mock(Horse.class),
-            Mockito.mock(Horse.class),
-            Mockito.mock(Horse.class),
-            Mockito.mock(Horse.class),
-            Mockito.mock(Horse.class),
-            Mockito.mock(Horse.class),
-            Mockito.mock(Horse.class),
-            Mockito.mock(Horse.class),
-            Mockito.mock(Horse.class),
-            Mockito.mock(Horse.class),
-            Mockito.mock(Horse.class),
-            Mockito.mock(Horse.class),
-            Mockito.mock(Horse.class),
-            Mockito.mock(Horse.class),
-            Mockito.mock(Horse.class),
-            Mockito.mock(Horse.class),
-            Mockito.mock(Horse.class),
-            Mockito.mock(Horse.class),
-            Mockito.mock(Horse.class),
-            Mockito.mock(Horse.class)
-    );
+    @Spy
+    List<Horse> mockedHorses = IntStream.range(0, 50)
+            .mapToObj(x -> Mockito.mock(Horse.class))
+            .collect(Collectors.toList());
 
     @Test
     public void move_mockedHorsesList_verifyCallingEveryHorseMove() {
         Hippodrome hippodrome = new Hippodrome(mockedHorses);
         hippodrome.move();
         mockedHorses.forEach(h -> Mockito.verify(h).move());
+    }
 
-
-//        try (MockedStatic<Hippodrome> hippodromeMockedStatic = Mockito.mockStatic(Hippodrome.class)) {
-//            Hippodrome hippodrome = new Hippodrome(mockedHorses);
-//            hippodrome.move();
-//            hippodromeMockedStatic.verify(() -> mockedHorses.forEach(Horse::move));
-//        }
-
-
-
-//        try (MockedStatic<Horse> horseMock = Mockito.mockStatic(Horse.class)) {
-//            horseMock.when(() -> Horse.getRandomDouble(0.2, 0.9)).thenReturn(value);
-//            Horse horse = new Horse("Alfa", 370, 285);
-//            horse.move();
-//            Assertions.assertEquals(285 + 370 * value, horse.getDistance());
-//            horseMock.verify(() -> Horse.getRandomDouble(0.2, 0.9));
-//        }
+    @Test
+    public void whenGetWinner_returnsHorseWithLongestDistance() {
+        Hippodrome hippodrome = new Hippodrome(horses);
+        hippodrome.move();
+        Assertions.assertEquals(winner.getDistance(), hippodrome.getWinner().getDistance());
     }
 }
