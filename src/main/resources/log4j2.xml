@@ -1,14 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Configuration status="DEBUG">
+<Configuration status="ERROR">
     <Appenders>
-        <File name="FileLogger" fileName="logs/hippodrome.log">
-            <PatternLayout pattern="[%p] %d{yyyy-MM-dd HH:mm:ss} %c{1} - %m%n"/>
-        </File>
+        <RollingFile name="FileLogger" fileName="logs/hippodrome.log" filePattern="logs/hippodrome.%d{yyyy-MM-dd}.log">
+            <PatternLayout pattern="%d %p %c{1.}: %m%n"/>
+            <TimeBasedTriggeringPolicy/>
+            <DefaultRolloverStrategy>
+                <Delete basePath="logs" maxDepth="2">
+                    <IfFileName glob="hippodrome.*.log"/>
+                    <IfLastModified age="7d"/>
+                </Delete>
+            </DefaultRolloverStrategy>
+        </RollingFile>
     </Appenders>
 
     <Loggers>
-        <Root level="debug">
-            <AppenderRef ref="Console"/>
+        <Root level="ALL">
+            <AppenderRef ref="FileLogger"/>
         </Root>
     </Loggers>
 </Configuration>
